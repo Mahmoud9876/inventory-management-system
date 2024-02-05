@@ -271,6 +271,27 @@
                             </li>
 
 
+                            <li class="nav-item {{ request()->is('categories') ? 'active' : null }}">
+                                <a class="nav-link" href="{{ route('categories.index') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-file" width="24" height="24"
+                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                             fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                            <path
+                                                d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        {{ __('Categories') }}
+                                    </span>
+                                </a>
+                            </li>
+
+
                             <li class="nav-item dropdown {{ request()->is('orders*') ? 'active' : null }}">
                                 <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                                     data-bs-auto-close="outside" role="button" aria-expanded="false">
@@ -354,29 +375,6 @@
                                     </div>
                                 </div>
                             </li>
-
-
-
-                            <li class="nav-item {{ request()->is('quotations') ? 'active' : null }}">
-                                <a class="nav-link" href="{{ route('quotations.index') }}">
-                                    <span
-                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-file" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                            <path
-                                                d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                        </svg>
-                                    </span>
-                                    <span class="nav-link-title">
-                                        {{ __('Quotations') }}
-                                    </span>
-                                </a>
-                            </li>
-
 
 
                             <li
