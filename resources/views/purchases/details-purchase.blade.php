@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="small mb-1">Updated By</label>
-                                <div class="form-control form-control-solid">{{ $purchase->updated_by ? $purchase->updated_by->name : '-' }}</div>
+                                <div class="form-control form-control-solid">{{ $purchase->updatedBy ? $purchase->updatedBy->name : '-' }}</div>
                             </div>
                         </div>
 
