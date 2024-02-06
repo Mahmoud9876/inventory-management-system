@@ -151,7 +151,7 @@ class PurchaseController extends Controller
     {
         $purchases = Purchase::with(['supplier'])
             //->where('purchase_status', 1)
-            ->where('date', today()->format('Y-m-d'))->get();
+            ->get(); //  ->where('date', today()->format('Y-m-d'))->get(); to make it daily
 
         return view('purchases.details-purchase', [
             'purchases' => $purchases

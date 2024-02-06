@@ -16,6 +16,7 @@
     </div>
 </header>
 
+@foreach($purchases as $purchase)
 <div class="container-xl px-4">
     <div class="row">
         <div class="col-xl-12">
@@ -23,73 +24,73 @@
                 <div class="card-header">
                     Information Supplier
                 </div>
-                <div class="card-body">
-                    <!-- Form Row -->
-                    <div class="row gx-3 mb-3">
-                        <!-- Form Group (supplier name) -->
-                        <div class="col-md-6">
-                            <label class="small mb-1">Name</label>
-                            <div class="form-control form-control-solid">{{ $purchase->supplier->name }}</div>
+                    <div class="card-body">
+                        <!-- Form Row -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (supplier name) -->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Name</label>
+                                <div class="form-control form-control-solid">{{ $purchase->supplier->name }}</div>
+                            </div>
+                            <!-- Form Group (supplier email) -->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Email</label>
+                                <div class="form-control form-control-solid">{{ $purchase->supplier->email }}</div>
+                            </div>
                         </div>
-                        <!-- Form Group (supplier email) -->
-                        <div class="col-md-6">
-                            <label class="small mb-1">Email</label>
-                            <div class="form-control form-control-solid">{{ $purchase->supplier->email }}</div>
+                        <!-- Form Row -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (supplier phone number) -->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Phone</label>
+                                <div class="form-control form-control-solid">{{ $purchase->supplier->phone }}</div>
+                            </div>
+                            <!-- Form Group (order date) -->
+                            <div class="col-md-6">
+                                <label class="small mb-1">Order Date</label>
+                                <div class="form-control form-control-solid">{{ $purchase->date }}</div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Form Row -->
-                    <div class="row gx-3 mb-3">
-                        <!-- Form Group (supplier phone number) -->
-                        <div class="col-md-6">
-                            <label class="small mb-1">Phone</label>
-                            <div class="form-control form-control-solid">{{ $purchase->supplier->phone }}</div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1">No Purchase</label>
+                                <div class="form-control form-control-solid">{{ $purchase->purchase_no }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1">Total</label>
+                                <div class="form-control form-control-solid">{{ $purchase->total_amount }}</div>
+                            </div>
                         </div>
-                        <!-- Form Group (order date) -->
-                        <div class="col-md-6">
-                            <label class="small mb-1">Order Date</label>
-                            <div class="form-control form-control-solid">{{ $purchase->purchase_date }}</div>
-                        </div>
-                    </div>
-                    <div class="row gx-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="small mb-1">No Purchase</label>
-                            <div class="form-control form-control-solid">{{ $purchase->purchase_no }}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1">Total</label>
-                            <div class="form-control form-control-solid">{{ $purchase->total_amount }}</div>
-                        </div>
-                    </div>
 
-                    <div class="row gx-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="small mb-1">Created By</label>
-                            <div class="form-control form-control-solid">{{ $purchase->user_created->name }}</div>
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1">Created By</label>
+                                <div class="form-control form-control-solid">{{ $purchase->createdBy->name }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1">Updated By</label>
+                                <div class="form-control form-control-solid">{{ $purchase->updated_by ? $purchase->updated_by->name : '-' }}</div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1">Updated By</label>
-                            <div class="form-control form-control-solid">{{ $purchase->user_updated ? $purchase->user_updated->name : '-' }}</div>
+
+                        <div class="mb-3">
+                            <label  class="small mb-1">Address</label>
+                            <div class="form-control form-control-solid">{{ $purchase->supplier->address }}</div>
                         </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label  class="small mb-1">Address</label>
-                        <div class="form-control form-control-solid">{{ $purchase->supplier->address }}</div>
+                        @if ($purchase->purchase_status == 0)
+                            <form action="{{ route('purchases.update', $purchase->uuid) }}" method="POST">
+                                @csrf
+                                @method('put')
+                                <input type="hidden" name="id" value="{{ $purchase->id }}">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this purchase?')">Approve Purchase</button>
+                                <a class="btn btn-primary" href="{{ URL::previous() }}">Back</a>
+                            </form>
+                        @else
+                            <a class="btn btn-primary" href="{{ URL::previous() }}">Back</a>
+                        @endif
                     </div>
-
-                    @if ($purchase->purchase_status == 0)
-                    <form action="{{ route('purchases.updatePurchase') }}" method="POST">
-                        @csrf
-                        @method('put')
-                        <input type="hidden" name="id" value="{{ $purchase->id }}">
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to approve this purchase?')">Approve Purchase</button>
-                        <a class="btn btn-primary" href="{{ URL::previous() }}">Back</a>
-                    </form>
-                    @else
-                    <a class="btn btn-primary" href="{{ URL::previous() }}">Back</a>
-                    @endif
-                </div>
             </div>
         </div>
 
@@ -116,7 +117,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($purchaseDetails as $item)
+                                    @foreach ($purchase->details as $item)
                                     <tr>
                                         <td scope="row">{{ $loop->iteration  }}</td>
                                         <td scope="row">
@@ -124,9 +125,9 @@
                                                 <img class="img-fluid"  src="{{ $item->product->product_image ? asset('storage/products/'.$item->product->product_image) : asset('assets/img/products/default.webp') }}">
                                             </div>
                                         </td>
-                                        <td scope="row">{{ $item->product->product_name }}</td>
-                                        <td scope="row">{{ $item->product->product_code }}</td>
-                                        <td scope="row"><span class="btn btn-warning">{{ $item->product->stock }}</span></td>
+                                        <td scope="row">{{ $item->product->name }}</td>
+                                        <td scope="row">{{ $item->product->code }}</td>
+                                        <td scope="row"><span class="btn btn-warning">{{ $item->product->quantity }}</span></td>
                                         <td scope="row"><span class="btn btn-success">{{ $item->quantity }}</span></td>
                                         <td scope="row">{{ $item->unitcost }}</td>
                                         <td scope="row">
@@ -143,4 +144,6 @@
         </div>
     </div>
 </div>
+@endforeach
+
 @endsection
