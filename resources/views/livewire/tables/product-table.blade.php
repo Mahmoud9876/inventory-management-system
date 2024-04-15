@@ -97,7 +97,7 @@
             </thead>
             <tbody>
                 @forelse ($products as $product)
-                    <tr>
+                    <tr class="{{$product->quantity <= $product->quantity_alert ? 'table-danger':''}}">
                         <td class="align-middle text-center">
                             {{ $loop->iteration }}
                         </td>
