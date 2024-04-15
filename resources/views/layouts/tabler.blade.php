@@ -115,13 +115,12 @@
                                 {{--                                            @endforeach --}}
                                 {{--                                        </div> --}}
                                 {{--                                    </div> --}}
-                                <span class="dropdown-header">Dropdown header</span>
+                                <span class="dropdown-header">Besoin en Appro</span>
+                                @foreach($products_alert as $product)
                                 <a class="dropdown-item" href="#">
-                                    Action
+                                    {{' besoin d\'approvisionnement sur le produit' . $product->name . '('.$product->uuid.')'}}
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    Another action
-                                </a>
+                                @endforeach
                             </div>
                         </div>
 
