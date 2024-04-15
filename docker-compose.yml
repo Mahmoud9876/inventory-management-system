@@ -1,0 +1,22 @@
+version: '3'
+services:
+    mysql:
+        image: 'mysql:5.7'
+        environment:
+            MYSQL_DATABASE: inventory_management_system
+            MYSQL_ROOT_PASSWORD: secret
+        networks:
+            - laravel
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8000:8000
+        volumes:
+            - .:/var/www/html
+        working_dir: /var/www/html
+        networks:
+            - laravel
+networks:
+    laravel:
