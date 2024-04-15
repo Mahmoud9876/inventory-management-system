@@ -1,6 +1,7 @@
 <?php
-
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Dashboards\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -19,7 +20,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ABCAnalysisController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,6 +116,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::put('/purchases/update/{purchase}', [PurchaseController::class, 'update'])->name('purchases.update');
     Route::delete('/purchases/delete/{purchase}', [PurchaseController::class, 'destroy'])->name('purchases.delete');
+    
+    //contractroutes
+    Route::resource('/contracts', ContractsController::class);
+    Route::resource('/abc-analysis', ABCAnalysisController::class);
+
+    
 });
 
 require __DIR__.'/auth.php';

@@ -31,6 +31,7 @@
     <div class="page-body">
         <div class="container-xl">
             <div class="row row-deck row-cards">
+    
                 {{-- -
                 <div class="col-sm-6 col-lg-3">
                     <div class="card">
@@ -225,6 +226,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-sm-6 col-lg-3">
                             <div class="card card-sm">
                                 <div class="card-body">
@@ -291,6 +293,41 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6 col-lg-3">
+    <div class="card card-sm">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <a href="{{ route('abc-analysis.index') }}" class="bg-primary text-white avatar">
+                        <!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-packages"
+                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                            <path d="M2 13.5v5.5l5 3" />
+                            <path d="M7 16.545l5 -3.03" />
+                            <path d="M17 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                            <path d="M12 19l5 3" />
+                            <path d="M17 16.5l5 -3" />
+                            <path d="M12 13.5v-5.5l-5 -3l5 -3l5 3v5.5" />
+                            <path d="M7 5.03v5.455" />
+                            <path d="M12 8l5 -3" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="col">
+                    <div class="font-weight-medium">
+                        ABC Analysis
+                    </div>
+                    <div class="text-muted">
+                        Analyze your products
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                 {{-- -
                 <div class="col-lg-6">
