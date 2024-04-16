@@ -32,7 +32,6 @@ class Contracts extends Model
         'product_id' => 'integer',
         'payment_terms' => 'string',
         'ordered_quantity' => 'integer', 
-        'unit_price' => 'decimal', 
         'contract_status' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -43,6 +42,9 @@ class Contracts extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
-
+public function products()
+{
+    return $this->belongs(Product::class);
+}
     
 }

@@ -130,6 +130,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //contractroutes
     Route::resource('/contracts', ContractsController::class);
     Route::resource('/abc-analysis', ABCAnalysisController::class);
+    
+
+    Route::get('/contracts/{id}/pdf', [ContractsController::class, 'pdf'])->name('contracts.pdf');
 
     
 
