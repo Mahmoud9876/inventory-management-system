@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Requests\Quotation\StoreQuotationRequest;
 use Illuminate\Support\Facades\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class QuotationController extends Controller
 {

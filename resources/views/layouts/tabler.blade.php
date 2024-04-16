@@ -380,7 +380,28 @@
                                 </div>
                             </li>
 
-
+                            <li class="nav-item {{ request()->is('inventaire*') ? 'active' : null }}">
+                                <a class="nav-link" href="{{ route('inventory.index') }}">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <!-- Utilisez une icône appropriée pour "Inventory" -->
+                                        <!-- Par exemple, vous pouvez utiliser une icône de boîte ou de stock -->
+                                        <!-- Assurez-vous de remplacer le contenu de la balise <svg> par l'icône souhaitée -->
+                                        <!-- Vous pouvez trouver des icônes gratuites sur des sites comme Font Awesome ou Tabler Icons -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-file" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                            <path
+                                                d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        {{ __('Inventory') }}
+                                    </span>
+                                </a>
+                            </li>
 
                             <li class="nav-item {{ request()->is('quotations') ? 'active' : null }}">
                                 <a class="nav-link" href="{{ route('quotations.index') }}">
