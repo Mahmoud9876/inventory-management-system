@@ -21,6 +21,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ABCAnalysisController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -120,6 +121,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //contractroutes
     Route::resource('/contracts', ContractsController::class);
     Route::resource('/abc-analysis', ABCAnalysisController::class);
+    
+
+    Route::get('/contracts/{id}/pdf', [ContractsController::class, 'pdf'])->name('contracts.pdf');
 
     
 });

@@ -19,7 +19,13 @@
         </div>
 
         <div class="card-actions">
-            <!-- Your create action button -->
+        <div class="card-footer text-end">
+                                    
+                                    </button>
+                                    <a class="btn btn-outline-warning" href="{{ route('contracts.create') }}">
+                                        {{ __('Create') }}
+                                    </a>
+                                </div>
         </div>
     </div>
 
