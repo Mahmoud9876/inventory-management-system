@@ -73,6 +73,12 @@
                         </a>
                     </th>
                     <th scope="col" class="align-middle text-center">
+                        <a wire:click.prevent="sortBy('emplacement')" href="#" role="button">
+                            {{ __('Emplacement') }}
+                            @include('inclues._sort-icon', ['field' => 'emplacement'])
+                        </a>
+                    </th>
+                    <th scope="col" class="align-middle text-center">
                         <a wire:click.prevent="sortBy('code')" href="#" role="button">
                             {{ __('Code') }}
                             @include('inclues._sort-icon', ['field' => 'code'])
@@ -97,7 +103,7 @@
             </thead>
             <tbody>
                 @forelse ($products as $product)
-                    <tr>
+                    <tr class="{{$product->quantity <= $product->quantity_alert ? 'table-danger':''}}">
                         <td class="align-middle text-center">
                             {{ $loop->iteration }}
                         </td>
@@ -108,6 +114,9 @@
                         </td>
                         <td class="align-middle text-center">
                             {{ $product->name }}
+                        </td>
+                        <td class="align-middle text-center">
+                            {{ $product->emplacement }}
                         </td>
                         <td class="align-middle text-center">
                             {{ $product->code }}

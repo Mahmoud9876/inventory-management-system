@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Dashboards;
-
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
@@ -26,7 +25,7 @@ class DashboardController extends Controller
 
         $categories = Category::where("user_id", auth()->id())->count();
         $quotations = Quotation::where("user_id", auth()->id())->count();
-
+        $abcAnalysisRoute = route('abc-analysis.index');
         return view('dashboard', [
             'products' => $products,
             'orders' => $orders,
@@ -36,7 +35,8 @@ class DashboardController extends Controller
             'todayQuotations' => $todayQuotations,
             'todayOrders' => $todayOrders,
             'categories' => $categories,
-            'quotations' => $quotations
+            'quotations' => $quotations,
+            'abcAnalysisRoute' => $abcAnalysisRoute,
         ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
-
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Dashboards\DashboardController;
 use App\Http\Controllers\InvoiceController;
@@ -22,6 +23,8 @@ use App\Http\Controllers\Inventory\InventoryController;
 use App\Http\Controllers\Inventory\InventoryExportController;
 use App\Http\Controllers\Inventory\InventoryImportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GrandLivreController;
+use App\Http\Controllers\ABCAnalysisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,7 +122,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/purchases/update/{purchase}', [PurchaseController::class, 'update'])->name('purchases.update');
     Route::delete('/purchases/delete/{purchase}', [PurchaseController::class, 'destroy'])->name('purchases.delete');
 
-    //
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('/inventory/rapport', [InventoryController::class, 'genererRapport'])->name('inventory.report');
@@ -128,6 +130,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('inventory/export/', [InventoryExportController::class, 'create'])->name('inventory.export.store');
     Route::resource('/inventory', InventoryController::class);
 
+    //Grandlivre
+    Route::get('/grand-livre', [GrandLivreController::class, 'index'])->name('grand.index');
+    Route::post('/grand-livre', [GrandLivreController::class, 'store'])->name('grand-livre.store');
+    Route::get('/grand-livre/soldes-progressifs', [GrandLivreController::class, 'soldesProgressifs'])->name('grand-livre.soldes');
+    Route::get('/generate-pdf', [GrandLivreController::class, 'generatePdf'])->name('grand.generate-pdf');
+
+    
+    //contractroutes
+    Route::resource('/contracts', ContractsController::class);
+    Route::resource('/abc-analysis', ABCAnalysisController::class);
+    
+
+    Route::get('/contracts/{id}/pdf', [ContractsController::class, 'pdf'])->name('contracts.pdf');
 
 });
 
