@@ -18,6 +18,9 @@ use App\Http\Controllers\Quotation\QuotationController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Inventory\InventoryController;
+use App\Http\Controllers\Inventory\InventoryExportController;
+use App\Http\Controllers\Inventory\InventoryImportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -115,6 +118,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::put('/purchases/update/{purchase}', [PurchaseController::class, 'update'])->name('purchases.update');
     Route::delete('/purchases/delete/{purchase}', [PurchaseController::class, 'destroy'])->name('purchases.delete');
+
+    //
+
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::post('/inventory/rapport', [InventoryController::class, 'genererRapport'])->name('inventory.report');
+    Route::get('inventory/import/', [InventoryImportController::class, 'create'])->name('inventory.import.view');
+    Route::post('inventory/import/', [InventoryExportController::class, 'store'])->name('inventory.import.store');
+    Route::get('inventory/export/', [InventoryExportController::class, 'create'])->name('inventory.export.store');
+    Route::resource('/inventory', InventoryController::class);
+
+
 });
 
 require __DIR__.'/auth.php';

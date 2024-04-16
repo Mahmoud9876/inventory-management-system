@@ -11,7 +11,7 @@ use App\Models\Unit;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Picqer\Barcode\BarcodeGeneratorHTML;
-use Str;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
