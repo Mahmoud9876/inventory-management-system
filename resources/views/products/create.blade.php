@@ -58,7 +58,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row row-cards">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6 col-sm-6">
 
                                         <x-input name="name"
                                                  id="name"
@@ -102,6 +102,31 @@
                                             @endif
 
                                             @error('category_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="mb-3">
+                                            <label for="emplacement" class="form-label">
+                                                Place
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <select name="emplacement" id="emplacement"
+                                                    class="form-select @error('place') is-invalid @enderror"
+                                                    readonly
+                                            >
+                                                @foreach (['A1', 'A2', 'A3', 'A4', 'A5', 'B1', 'B2', 'B3', 'B4', 'B5', 'C1', 'C2', 'C3', 'C4', 'C5',] as $place)
+                                                    <option value="{{ $place }}" selected>
+                                                        {{ $place }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('emplacement')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
