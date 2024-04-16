@@ -63,6 +63,7 @@ class ProductController extends Controller
 
             'product_image'     => $image,
             'name'              => $request->name,
+            'emplacement'       => $request->emplacement,
             'category_id'       => $request->category_id,
             'unit_id'           => $request->unit_id,
             'quantity'          => $request->quantity,
