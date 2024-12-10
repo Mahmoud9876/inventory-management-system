@@ -268,7 +268,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <li class="nav-item {{ request()->is('Contracts*') ? 'active' : null }}">
+{{--                            <li class="nav-item {{ request()->is('Contracts*') ? 'active' : null }}">
                                 <a class="nav-link" href="{{ route('contracts.index') }}">
                                     <span
                                         class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -504,9 +504,6 @@
                                 <div class="dropdown-menu">
                                     <div class="dropdown-menu-columns">
                                         <div class="dropdown-menu-column">
-                                            {{-- <a class="dropdown-item" href="{{ route('users.index') }}">
-                                                    {{ __('Users') }}
-                                                </a> --}}
                                             <a class="dropdown-item" href="{{ route('categories.index') }}">
                                                 {{ __('Categories') }}
                                             </a>
@@ -517,7 +514,7 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>
+                        </ul>--}}
 
                         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                             <form action="./" method="get" autocomplete="off" novalidate>

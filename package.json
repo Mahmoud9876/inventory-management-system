@@ -1,5 +1,6 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "vite build"
@@ -15,6 +16,7 @@
         "vite-plugin-static-copy": "^0.17.0"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.5.9",
         "laravel-datatables-vite": "^0.5.2"
     }
 }
