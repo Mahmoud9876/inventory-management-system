@@ -1,42 +1,37 @@
-#FROM php:8.1-cli
-#
-#RUN apt-get update -y && apt-get install -y libmcrypt-dev zlib1g-dev libonig-dev libpng-dev
-#
-#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-#RUN docker-php-ext-install mbstring gd zip
+# use PHP 8.2
+FROM php:8.2-fpm
 
-FROM php:8.1-fpm-alpine
-
-# Install dependencies for GD and install GD with support for jpeg, png webp and freetype
-# Info about installing GD in PHP https://www.php.net/manual/en/image.installation.php
-RUN apk add --no-cache \
-        libjpeg-turbo-dev \
-        libpng-dev \
-        libwebp-dev \
-        freetype-dev \
-        libzip-dev \
-        icu-dev \
-        g++ \
-        npm
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install common php extension dependencies
+RUN apt-get update && apt-get install -y \
+    libfreetype-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    zlib1g-dev \
+    libzip-dev \
+    libicu-dev \
+    unzip \
+    npm \
+    && docker-php-ext-configure gd --with-freetype  --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install zip  gettext intl pdo_mysql
 
 
-# As of PHP 7.4 we don't need to add --with-png
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install intl
+# Set the working directory
+COPY . /var/www/app
+WORKDIR /var/www/app
 
-RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
-RUN docker-php-ext-install gd zip intl pdo pdo_mysql pcntl
+RUN chown -R www-data:www-data /var/www/app \
+    && chmod -R 775 /var/www/app/storage
 
-WORKDIR /app
-COPY . /app
 
+# install composer
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+
+# copy composer.json to workdir & install dependencies
+COPY composer.json ./
 RUN composer install
 
-RUN npm install
+RUN npm install --production
 
-# RUN npm run dev
-
-EXPOSE 8000
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Set the default command to run php-fpm
+CMD ["php-fpm"]
