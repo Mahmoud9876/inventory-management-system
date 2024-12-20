@@ -25,6 +25,7 @@ use App\Http\Controllers\Inventory\InventoryImportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GrandLivreController;
 use App\Http\Controllers\ABCAnalysisController;
+use \App\Http\Controllers\Detection\DetectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,12 +42,9 @@ Route::get('php/', function () {
     return phpinfo();
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard/', [DashboardController::class, 'index'])->name('dashboard');
 
     // User Management
@@ -71,6 +69,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('products/import/', [ProductImportController::class, 'store'])->name('products.import.store');
     Route::get('products/export/', [ProductExportController::class, 'create'])->name('products.export.store');
     Route::resource('/products', ProductController::class);
+
+    Route::resource('/detections', DetectionController::class);
 
     // Route POS
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
@@ -136,18 +136,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/grand-livre/soldes-progressifs', [GrandLivreController::class, 'soldesProgressifs'])->name('grand-livre.soldes');
     Route::get('/generate-pdf', [GrandLivreController::class, 'generatePdf'])->name('grand.generate-pdf');
 
-    
+
     //contractroutes
     Route::resource('/contracts', ContractsController::class);
     Route::resource('/abc-analysis', ABCAnalysisController::class);
-    
+
 
     Route::get('/contracts/{id}/pdf', [ContractsController::class, 'pdf'])->name('contracts.pdf');
 
 });
 
+Route::get('/', function () {
+    return view('auth.login');
+});
 require __DIR__.'/auth.php';
 
-Route::get('test/', function (){
+Route::get('test', function (){
     return view('test');
 });

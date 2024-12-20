@@ -241,7 +241,6 @@
                                 </a>
                             </li>
 
-
                             <li class="nav-item {{ request()->is('products*') ? 'active' : null }}">
                                 <a class="nav-link" href="{{ route('products.index') }}">
                                     <span
@@ -265,6 +264,32 @@
                                     </span>
                                     <span class="nav-link-title">
                                         {{ __('Products') }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->is('detectons*') ? 'active' : null }}">
+                                <a class="nav-link" href="{{ route('detections.create') }}">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             class="icon icon-tabler icon-tabler-packages" width="24"
+                                             height="24" viewBox="0 0 24 24" stroke-width="2"
+                                             stroke="currentColor" fill="none" stroke-linecap="round"
+                                             stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                                            <path d="M2 13.5v5.5l5 3" />
+                                            <path d="M7 16.545l5 -3.03" />
+                                            <path d="M17 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
+                                            <path d="M12 19l5 3" />
+                                            <path d="M17 16.5l5 -3" />
+                                            <path d="M12 13.5v-5.5l-5 -3l5 -3l5 3v5.5" />
+                                            <path d="M7 5.03v5.455" />
+                                            <path d="M12 8l5 -3" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        {{ __('Product detection') }}
                                     </span>
                                 </a>
                             </li>
@@ -479,7 +504,7 @@
                                 </a>
                             </li>
 
-
+--}}
 
                             <li
                                 class="nav-item dropdown {{ request()->is('users*', 'categories*', 'units*') ? 'active' : null }}">
@@ -514,7 +539,7 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>--}}
+                        </ul>
 
                         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                             <form action="./" method="get" autocomplete="off" novalidate>
