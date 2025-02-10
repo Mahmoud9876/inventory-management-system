@@ -82,6 +82,7 @@
                                 @if (auth()->user()->unreadNotifications->count() !== 0)
                                     <span class="badge bg-red"></span>
                                 @endif
+                                <span class="badge bg-red">{{$products_alert->count()}}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
 
@@ -535,6 +536,11 @@
                                             <a class="dropdown-item" href="{{ route('units.index') }}">
                                                 {{ __('Units') }}
                                             </a>
+                                            @if(auth()->user()->name == 'Admin')
+                                            <a class="dropdown-item" href="{{ route('users.index') }}">
+                                                {{ __('Users') }}
+                                            </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

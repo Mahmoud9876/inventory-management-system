@@ -1,42 +1,80 @@
 <?php
 
 namespace App\Http\Controllers\Dashboards;
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\Purchase;
-use App\Models\Quotation;
-use Carbon\Carbon;
+
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::where("user_id", auth()->id())->count();
-        $products = Product::where("user_id", auth()->id())->count();
+        $selectedCategory = $request->input('category');
+        $stockStatus = $request->input('stock_status', 'all');
+        $dateFilter = $request->input('date');
 
-        $purchases = Purchase::where("user_id", auth()->id())->count();
-        $todayPurchases = Purchase::where('date', today()->format('Y-m-d'))->count();
-        $todayProducts = Product::where('created_at', today()->format('Y-m-d'))->count();
-        $todayQuotations = Quotation::where('created_at', today()->format('Y-m-d'))->count();
-        $todayOrders = Order::where('created_at', today()->format('Y-m-d'))->count();
+        $categories = Category::all();
+        $products = Product::with('category');
 
-        $categories = Category::where("user_id", auth()->id())->count();
-        $quotations = Quotation::where("user_id", auth()->id())->count();
-        $abcAnalysisRoute = route('abc-analysis.index');
+        if ($selectedCategory) {
+            $products->where('category_id', $selectedCategory);
+        }
+
+        if ($stockStatus == 'alert') {
+            $products->whereColumn('quantity', '<', 'quantity_alert');
+        } elseif ($stockStatus == 'available') {
+            $products->whereColumn('quantity', '>=', 'quantity_alert');
+        }
+
+        if ($dateFilter) {
+            $products->whereDate('updated_at', $dateFilter);
+        }
+
+        $stockTrends = Product::select('name', 'quantity')
+            ->orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get();
+
+        $productDistribution = Product::select('category_id', DB::raw('count(*) as total'))
+            ->groupBy('category_id')
+            ->with('category')
+            ->get();
+
+        $nearAlertProducts = Product::whereColumn('quantity', '<=', DB::raw('quantity_alert + 5'))
+            ->whereColumn('quantity', '>', 'quantity_alert')
+            ->get();
+
+        $detectedProducts = session('inventory', []);
+
+        // ✅ Récupérer les détections depuis la session et trier par nombre de détections
+        $detections = session('detections', []);
+        arsort($detections); // Trie décroissant par nombre de détections
+
+        $stockStatusChart = [
+            'available' => Product::whereColumn('quantity', '>=', 'quantity_alert')->count(),
+            'alert' => Product::whereColumn('quantity', '<', 'quantity_alert')->count()
+        ];
+
         return view('dashboard', [
-            'products' => $products,
-            'orders' => $orders,
-            'purchases' => $purchases,
-            'todayPurchases' => $todayPurchases,
-            'todayProducts' => $todayProducts,
-            'todayQuotations' => $todayQuotations,
-            'todayOrders' => $todayOrders,
             'categories' => $categories,
-            'quotations' => $quotations,
-            'abcAnalysisRoute' => $abcAnalysisRoute,
+            'products' => $products->get(),
+            'selectedCategory' => $selectedCategory,
+            'stockStatus' => $stockStatus,
+            'dateFilter' => $dateFilter ?? '',
+            'totalProducts' => Product::count(),
+            'totalLowStock' => Product::whereColumn('quantity', '<', 'quantity_alert')->count(),
+            'totalCriticalCategories' => Category::whereHas('products', function ($query) {
+                $query->whereColumn('quantity', '<', 'quantity_alert');
+            })->count(),
+            'productDistribution' => $productDistribution,
+            'stockTrends' => $stockTrends,
+            'nearAlertProducts' => $nearAlertProducts,
+            'detectedProducts' => $detectedProducts,
+            'stockStatusChart' => $stockStatusChart,
+            'detections' => $detections // ✅ Envoi des détections à la vue
         ]);
     }
 }

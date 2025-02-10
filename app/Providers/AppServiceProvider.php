@@ -8,7 +8,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Product;
-
+use App\Observers\ProductObserver;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Product::observe(ProductObserver::class);
         Paginator::useBootstrapFive();
 
         Request::macro('breadcrumbs', function (){
@@ -33,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function($view) {
             $view->with('products_alert' , Product::whereColumn('quantity', '<=', 'quantity_alert')->get());
         });
+        
     }
 }

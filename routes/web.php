@@ -25,7 +25,7 @@ use App\Http\Controllers\Inventory\InventoryImportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GrandLivreController;
 use App\Http\Controllers\ABCAnalysisController;
-use \App\Http\Controllers\Detection\DetectionController;
+use App\Http\Controllers\Detection\DetectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard/', [DashboardController::class, 'index'])->name('dashboard');
 
     // User Management
-    // Route::resource('/users', UserController::class); //->except(['show']);
+     Route::resource('/users', UserController::class); //->except(['show']);
     Route::put('/user/change-password/{username}', [UserController::class, 'updatePassword'])->name('users.updatePassword');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -70,7 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('products/export/', [ProductExportController::class, 'create'])->name('products.export.store');
     Route::resource('/products', ProductController::class);
 
-    Route::resource('/detections', DetectionController::class);
+   // Route::resource('/detections', DetectionController::class);
 
     // Route POS
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
@@ -147,10 +147,44 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 require __DIR__.'/auth.php';
 
 Route::get('test', function (){
     return view('test');
 });
+use App\Http\Controllers\YoloController;
+
+Route::get('/upload', function () {
+    return view('yolo.upload');
+})->name('upload');
+
+Route::post('/detect', [YoloController::class, 'predict'])->name('detect');
+
+
+
+
+
+
+Route::get('/detections/create', [DetectionController::class, 'create'])->name('detections.create');
+Route::post('/detections/store', [DetectionController::class, 'store'])->name('detections.store');
+Route::get('/detections/result', [DetectionController::class, 'result'])->name('detections.result'); // Assurez-vous que c'est bien "result"
+
+
+
+
+//stock 
+
+// mise a jour 
+
+
+
+
+use App\Http\Controllers\ExportController;
+
+// Accepter la méthode POST pour l'export PDF
+Route::post('/export/pdf', [ExportController::class, 'exportPDF'])->name('export.pdf');
+
+// Route pour l'export Excel (peut rester en GET si nécessaire)
+Route::get('/export/excel', [ExportController::class, 'exportExcel'])->name('export.excel');
